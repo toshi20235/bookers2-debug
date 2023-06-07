@@ -34,4 +34,16 @@ class User < ApplicationRecord
     followings.include?(user)
   end
   
+  def self.search(how,value)
+    if how == "0"
+      @users =User.where("name LIKE ?", "#{value}")
+    elsif how == "1"
+      @users =User.where("name LIKE ?", "#{value}%")
+    elsif how == "2"
+      @users =User.where("name LIKE ?", "%#{value}")
+    else
+      @users = User.where(['name LIKE ?', "%#{value}%"])
+    end
+  end
+  
 end

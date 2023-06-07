@@ -11,4 +11,17 @@ class Book < ApplicationRecord
   def favorited_by?(user)
     favorites.exists?(user_id: user.id)
   end
+  
+  def self.search(how,value)
+    if how == "0"
+        @books =Book.where("title LIKE ?", "#{value}")
+    elsif how == "1"
+        @books =Book.where("title LIKE ?", "#{value}%")
+    elsif how == "2"
+        @books =Book.where("title LIKE ?", "%#{value}")
+    else
+        @books = Book.where(['title LIKE ?', "%#{value}%"])
+    end
+  end
+
 end
