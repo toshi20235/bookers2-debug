@@ -17,6 +17,7 @@
           </td>
           <td><%= link_to @book_1.title, @book_1 %></td>
           <td><%= @book_1.body %></td>
+          <td class ="favorite-btn"><%= render 'favorites/favorite-btn', book: @book_1 %></td>
             <td>
                <% if @user == current_user %>
                 <%= link_to 'Edit', edit_book_path(@book_1), class: "btn btn-sm btn-success" %></td>
@@ -32,7 +33,6 @@
             <td>
                <% @book_1.book_comments.each do |book_comment| %>
                <%= image_tag @user.get_profile_image, size:"100x100" %>
-               
                <%= book_comment.comment %>
               <% if book_comment.user == current_user %>
                <%= link_to "destroy",  book_book_comment_path(book_comment.book, book_comment), method: :delete, class: "btn btn-sm btn-danger" %>
@@ -43,12 +43,10 @@
            <% end %>
           </tr>
         </table>
-        <table>
-              <%= form_with model: [@book_1, @book_comment] do |f| %>
+              <%= form_with model: [@book_1, @book_comment], local: false  do |f| %>
               <%= f.text_area :comment, rows: '5', class: "form-control"  %>
               <%= f.submit "送信" %>
               <% end %>
-        </table>
     </div>
   </div>
 </div>
